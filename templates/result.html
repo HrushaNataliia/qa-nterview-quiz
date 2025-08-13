@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Результати - Підготовка до інтерв'ю QA{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2 class="mb-0">Результати тестування</h2>
+            </div>
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="result-stat">
+                            <h1 class="display-4 text-primary">{{ score }}</h1>
+                            <p class="text-muted">Правильних відповідей</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="result-stat">
+                            <h1 class="display-4 text-secondary">{{ total }}</h1>
+                            <p class="text-muted">Загальна кількість</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="result-stat">
+                            <h1 class="display-4
+                                {% if percentage >= 80 %}text-success
+                                {% elif percentage >= 60 %}text-warning
+                                {% else %}text-danger
+                                {% endif %}">{{ percentage }}%</h1>
+                            <p class="text-muted">Результат</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="assessment">
+                    {% if percentage >= 80 %}
+                        <div class="alert alert-success">
+                            <h4>🎉 Відмінний результат!</h4>
+                            <p>Ви демонструєте глибокі знання в автоматизованому тестуванні. Готові до інтерв'ю!</p>
+                        </div>
+                    {% elif percentage >= 60 %}
+                        <div class="alert alert-warning">
+                            <h4>⚡ Добрий результат</h4>
+                            <p>У вас хороша база знань, але є простір для вдосконалення. Повторіть слабші теми.</p>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-danger">
+                            <h4>📚 Потрібна підготовка</h4>
+                            <p>Рекомендуємо додатково вивчити теорію перед інтерв'ю.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="test-details">
+                    <p><strong>Мова програмування:</strong> {{ language }}</p>
+                    <p><strong>Фреймворк:</strong> {{ framework }}</p>
+                </div>
+
+                <div class="action-buttons mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg me-2">
+                        Пройти ще раз
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-lg">
+                        Змінити налаштування
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5>Рекомендації для підготовки:</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">📖 Вивчіть основи QC теорії та методології тестування</li>
+                    <li class="mb-2">🔧 Практикуйтесь з автоматизацією тестів</li>
+                    <li class="mb-2">💡 Розберіться з патернами проектування для тестування</li>
+                    <li class="mb-2">🎯 Вивчіть специфіку обраного фреймворка</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stats = document.querySelectorAll('.result-stat h1');
+    stats.forEach((stat, index) => {
+        setTimeout(() => {
+            stat.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                stat.style.transform = 'scale(1)';
+            }, 200);
+        }, index * 300);
+    });
+});
+</script>
+{% endblock %}
